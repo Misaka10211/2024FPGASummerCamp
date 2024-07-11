@@ -60,3 +60,10 @@ registermap读取错误：少了很多东西
 pragma HLS INTERFACE s_axilite port=rows  
 pragma HLS INTERFACE s_axilite port=cols  
 HLS INTERFACE s_axilite port=return  
+
+跑出来的图很怪  
+》》查看发现解压的vision lib文件有问题，最近使用的一直是2019版sobel_accelerator.cpp  
+》》改用github desktop下载, git bash会很慢    
+
+vision lib的环境变量改为 G:\Download\Vitis_Libraries\vision  
+重复正常流程，测试成功！  
