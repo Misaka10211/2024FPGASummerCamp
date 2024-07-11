@@ -1,4 +1,5 @@
 # 2024FPGASummerCamp
+#参与者：冯奕逍
 #lab1  
 目前由handcoded生成的bit文件可以传入2560*1440的图片，并正常处理。  
 在测试到visionlib时出现问题，导致part3的第14段代码跑不通。  
