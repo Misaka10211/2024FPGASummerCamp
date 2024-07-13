@@ -1,12 +1,48 @@
 # 2024FPGASummerCamp
-#参与者：冯奕逍
-#lab1  
-目前由handcoded生成的bit文件可以传入2560*1440的图片，并正常处理。  
-在测试到visionlib时出现问题，导致part3的第14段代码跑不通。  
->>需要下载vision lib sobelfilter项目文件，在xf_sobel_config.h中修改WIDTH和HEIGHT为所需的大小  
->>随后按正常流程重新生成bit和hwh    
+**参与者：冯奕逍**  
+**lab1**  
+*官方链接*  
+https://github.com/AEEE-SummerSchool/FPGA_Camp24/tree/main/Lab1_sobel  
+*功能描述*  
+调整了handcode相关代码，支持处理最大1280x720像素的图片  
+调整了vision library中sobel算子，支持处理最大512x512像素的图片  
+  
+*使用板卡* 
+KV260  
+  
+*环境配置*  
+（Windows 10系统）  
+Vision library  
+MinGW  
+CMAKE 3.30.0  
+OpenCV 4.4.0  教程在https://support.xilinx.com/s/article/000035890?language=en_US  
+Vitis 2023.2  
+Vivado 2023.2  
 
-#Log  
+*分析*    
+由handcoded生成的bit文件可以传入1280*720的图片，并正常处理；  
+→ 在进行试验时，修改了
+在用大图片测试到visionlib时出现问题，导致part3的第14段代码跑不通；  
+→ 需要下载vision lib sobelfilter项目文件，在xf_sobel_config.h中修改WIDTH和HEIGHT为所需的大小（本实验中设为了512x512）  
+→ 为通过Testbench, 需要在hls_standalone.tcl中修改测试用的图片  
+csim_design -ldflags "-L ${OPENCV_LIB} ${OPENCV_LIB_REF}" -argv "${XF_PROJ_ROOT}/data/512x512.png"  
+cosim_design -ldflags "-L ${OPENCV_LIB} ${OPENCV_LIB_REF}" -argv "${XF_PROJ_ROOT}/data/512x512.png"  
+→ 随后按正常流程重新生成bit和hwh    
+
+*避坑建议*:satisfied:  
+1、在解压OpenCV4.4.0文件时，最好放在“干净的路径”下，不能带有中文字符或空格，省心的做法是放在根目录  
+2、确保下载了opencv和opencv_contrib两个压缩包，把解压得到的两个文件夹改名（删除版本号），把它们放到新的文件夹中  
+https://github.com/opencv/opencv/archive/refs/tags/4.4.0.zip  
+https://github.com/opencv/opencv_contrib/archive/refs/tags/4.4.0.zip  
+3、OpenCV安装过程中OPENCV_EXTRA_MODULES_PATH需要选择opencv_contrib/modules的路径，要用“ / ”，而windows系统复制的路径是“ \ ”。记得改！不想改的话可以点击输入框右侧，手动在弹出窗口中选择路径  
+4、记得按教程设置环境变量：我的电脑-属性-高级系统设置-环境变量  
+5、不建议直接下载vision library压缩包并在本地解压，可能会出问题。建议用git bash或github desktop客户端进行下载  
+6、用KV260实验时，存在register map丢失的问题，xf_sobel_accel.cpp35-37行 删除“ boundle=control ”  
+7、如果vitis报错，提示库找不到，建议检查hls_standalone.tcl中环境变量是否设置正确  
+8、如果使用kv260进行试验，需要在hls_standalone.tcl中修改部件编号：修改为：set SOLUTION_PART "xck26-sfvc784-2lv-c"  
+9、vitis中（tcl脚本）选择的部件编号必须和vivado创建项目时选择的部件编号一致，否则会找不到sobel IP    
+
+*实验日志*:innocent:  
 从git下载Vitis_Libraries-master，解压至G:\Download  
 把G:\Download\Vitis_Libraries-master\vision\L1\examples\sobelfilter\build路径下的xf_config_params.h复制到G:\Download\Vitis_Libraries-master\vision\L1\examples\sobelfilter  
 严格按照visoon_library_win.md操作  
@@ -57,7 +93,7 @@ G:\Download\xup_embedded_system_design_flow-main\labs\sobel512\sobel512.gen\sour
 
 上传至远程实验室  
 registermap读取错误：少了很多东西  
-》》xf_sobel_accel.cpp35-37行 删除“boundle=control ”  
+》》xf_sobel_accel.cpp35-37行 删除“ boundle=control ”  
 pragma HLS INTERFACE s_axilite port=rows  
 pragma HLS INTERFACE s_axilite port=cols  
 HLS INTERFACE s_axilite port=return  
@@ -67,4 +103,4 @@ HLS INTERFACE s_axilite port=return
 》》改用github desktop下载, git bash会很慢    
 
 vision lib的环境变量改为 G:\Download\Vitis_Libraries\vision  
-重复正常流程，测试成功！  
+重复正常流程，测试成功:yum: 
