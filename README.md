@@ -103,4 +103,4 @@ HLS INTERFACE s_axilite port=return
 》》改用github desktop下载, git bash会很慢    
 
 vision lib的环境变量改为 G:\Download\Vitis_Libraries\vision  
-重复正常流程，测试成功:yum: 
+重复正常流程，测试成功:yum:  
