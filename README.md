@@ -141,3 +141,6 @@ NEWWIDTH, NEWHEIGHT是输出图片的尺寸，改为512
 
 IP生成成功G:\Download\Vitis_Libraries\vision\L1\examples\resize\hls_example\sol1\impl  
 解压export.zip  
+  
+在vivado中选择KV260板卡，导入vitis生成的resize, sobel IP，自动连线    
+生成.bit .hwh文件  
