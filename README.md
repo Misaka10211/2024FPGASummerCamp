@@ -128,7 +128,7 @@ run_hls_standalone.tcl从L2剪切到L1/examples/resize，在之前的基础上�
 （路径、part号已在前面改过，这里不改了）  
 set PROJ_DIR "$XF_PROJ_ROOT/L1/examples/resize"  
 set VISION_INC_FLAGS "-I$XF_PROJ_ROOT/L1/include -std=c++14"  
-L2/exampls/resize/config/xf_config_params.h中把  
+L1/exampls/resize/config/xf_config_params.h中把  
 WIDTH, HEIGHT是输入图片的尺寸，改为1024  
 NEWWIDTH, NEWHEIGHT是输出图片的尺寸，改为512  
 
