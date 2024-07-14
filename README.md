@@ -105,3 +105,20 @@ HLS INTERFACE s_axilite port=return
 vision lib的环境变量改为 G:\Download\Vitis_Libraries\vision  
 重复正常流程，测试成功!  
 😋  
+  
+#尝试Lab1 advance#  
+预计使用resize、sobelfilter  
+L2/exampls/resize/config/xf_config_params.h中把  
+WIDTH, HEIGHT是输入图片的尺寸，改为1024  
+NEWWIDTH, NEWHEIGHT是输出图片的尺寸，改为512  
+run_hls_standalone.tcl复制到L2/exampls/resize，进行以下修改： 
+（路径、part号已在前面改过，这里不改了）  
+set PROJ_DIR "$XF_PROJ_ROOT/L2/exampls/resize"  
+set PROJ_TOP "resize_accel"   
+add_files "${PROJ_DIR}/xf_resize_accel.cpp" -cflags "${VISION_INC_FLAGS} -I${PROJ_DIR}/build -I${PROJ_DIR}/config" -csimflags "${VISION_INC_FLAGS} -I${PROJ_DIR}/build -I${PROJ_DIR}/config"  
+add_files -tb "${PROJ_DIR}/xf_resize_tb.cpp" -cflags "${OPENCV_INC_FLAGS} ${VISION_INC_FLAGS} -I${PROJ_DIR}/config -I${PROJ_DIR}/build" -csimflags "${OPENCV_INC_FLAGS} ${VISION_INC_FLAGS} -I${PROJ_DIR}/build -I${PROJ_DIR}/config"  
+（测试用图片）
+csim_design -ldflags "-L ${OPENCV_LIB} ${OPENCV_LIB_REF}" -argv "${XF_PROJ_ROOT}/data/1024x1024.png"  
+cosim_design -ldflags "-L ${OPENCV_LIB} ${OPENCV_LIB_REF}" -argv "${XF_PROJ_ROOT}/data/1024x1024.png"  
+由于库里的数据没有1024x1024.png，自己创建一个，放到G:\Download\Vitis_Libraries\vision\data  
+按流程跑tcl，生成resize的IP  
