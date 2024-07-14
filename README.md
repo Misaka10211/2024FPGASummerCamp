@@ -7,6 +7,13 @@ https://github.com/AEEE-SummerSchool/FPGA_Camp24/tree/main/Lab1_sobel
 调整了handcode相关代码，支持处理最大1280x720像素的图片  
 调整了vision library中sobel算子，支持处理最大512x512像素的图片  
   
+**lab1 advance版**  
+*功能描述* 
+调整了vision library中resize算子，将1024x1024像素的图片缩小为512x512像素  
+图片在resize之后，用lab1基础版中能处理大图片sobel IP提取图像边缘  
+相关文件位于/lab1/notebook/resize_sobel_part3.ipynb, /lab1/kernal_resize, /lab1/overlay_resize  
+由于7月14日远程实验室无法连接，advande版的notebook未能在板卡运行  
+
 *使用板卡* 
 KV260  
   
